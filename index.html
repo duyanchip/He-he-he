@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ê về Sài Gòn ăn socola này 🍫 </title>
+    <title>Ê về Sài Gòn ăn socola này 🍫</title>
     <style>
+        /* Giao diện cơ bản */
         body {
             display: flex;
             flex-direction: column;
@@ -12,74 +13,117 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffe6e6;
+            background-color: #ffe6e6; /* Màu hồng nhạt */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
+            overflow: hidden; /* Chặn cuộn trang khi nút nhảy */
         }
 
-        h1 { color: #8d232f; }
+        h1 {
+            color: #8d232f;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
 
-        .container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
+        .gif-container img {
+            width: 200px;
+            border-radius: 15px;
+            margin-bottom: 20px;
         }
 
         .buttons {
-            margin-top: 30px;
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 20px;
+            width: 100%;
+            height: 100px; /* Tạo không gian cho nút nhảy */
+            position: relative;
         }
 
         button {
             padding: 15px 30px;
             font-size: 1.2rem;
+            font-weight: bold;
             cursor: pointer;
             border: none;
-            border-radius: 10px;
-            transition: 0.3s;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.9);
         }
 
         #btnYes {
             background-color: #4dc1ff;
             color: white;
+            z-index: 1;
         }
 
         #btnNo {
             background-color: #6c757d;
             color: white;
-            position: absolute; /* Quan trọng để di chuyển tự do */
+            position: absolute; /* Để nhảy tự do */
+            transition: all 0.3s ease; /* Hiệu ứng lướt đi mượt mà */
+            touch-action: none; /* Quan trọng cho điện thoại */
         }
     </style>
 </head>
 <body>
 
+    <div class="gif-container">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp4ZzRnd3p4ZzRnd3p4ZzRnd3p4ZzRnd3p4ZzRnd3p4ZzRndyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Bear">
+    </div>
+
     <h1>Ê về Sài Gòn ăn socola này 🍫</h1>
-    <div class="container">
-        <div class="buttons">
-            <button id="btnYes" onclick="love()">Ok 🦭</button>
-            <button id="btnNo" onmouseover="moveButton()">Không?</button>
-        </div>
+
+    <div class="buttons">
+        <button id="btnYes">Oke 🦭🦭🦭</button>
+        <button id="btnNo">Không?</button>
     </div>
 
     <script>
+        const btnNo = document.getElementById('btnNo');
+        const btnYes = document.getElementById('btnYes');
+
+        // Hàm di chuyển nút
         function moveButton() {
-            const btnNo = document.getElementById('btnNo');
-            
-            // Tính toán vị trí ngẫu nhiên trong màn hình
-            // Trừ đi kích thước nút để nó không văng ra khỏi mép màn hình
-            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight);
+            // Lấy kích thước màn hình
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
 
-            btnNo.style.left = x + 'px';
-            btnNo.style.top = y + 'px';
+            // Kích thước của nút
+            const btnWidth = btnNo.offsetWidth;
+            const btnHeight = btnNo.offsetHeight;
+
+            // Tính toán vị trí ngẫu nhiên (tránh sát mép quá)
+            const newX = Math.random() * (windowWidth - btnWidth - 40) + 20;
+            const newY = Math.random() * (windowHeight - btnHeight - 40) + 20;
+
+            btnNo.style.left = newX + 'px';
+            btnNo.style.top = newY + 'px';
+            btnNo.style.position = 'fixed'; // Chuyển sang fixed để nhảy khắp màn hình
         }
 
-        function love() {
+        // Xử lý khi di chuyển chuột (Máy tính)
+        btnNo.addEventListener('mouseover', moveButton);
+
+        // Xử lý khi chạm tay (Điện thoại)
+        btnNo.addEventListener('touchstart', function(e) {
+            e.preventDefault(); // Chặn click nhầm
+            moveButton();
+        });
+
+        // Khi nhấn Đồng ý
+        btnYes.addEventListener('click', () => {
             alert("Về đi r kao mua cho 🙄🙄🙄");
-            window.location.href = "https://i.pinimg.com/originals/cf/ec/ef/cfecefaa00432c7af0ec5e1642c04ec3.jpg"; // Hoặc link ảnh/video kỷ niệm
-        }
+            // Bạn có thể chuyển hướng đến Facebook hoặc một trang kỷ niệm
+            // window.location.href = "https://i.pinimg.com/originals/cf/ec/ef/cfecefaa00432c7af0ec5e1642c04ec3.jpg";
+        });
     </script>
+
 </body>
 </html>
