@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ê về Sài Gòn ăn socola này 🍫 </title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+
+        h1 { color: #8d232f; }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        #btnYes {
+            background-color: #4dc1ff;
+            color: white;
+        }
+
+        #btnNo {
+            background-color: #6c757d;
+            color: white;
+            position: absolute; /* Quan trọng để di chuyển tự do */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ê về Sài Gòn ăn socola này 🍫</h1>
+    <div class="container">
+        <div class="buttons">
+            <button id="btnYes" onclick="love()">Ok 🦭</button>
+            <button id="btnNo" onmouseover="moveButton()">Không?</button>
+        </div>
+    </div>
+
+    <script>
+        function moveButton() {
+            const btnNo = document.getElementById('btnNo');
+            
+            // Tính toán vị trí ngẫu nhiên trong màn hình
+            // Trừ đi kích thước nút để nó không văng ra khỏi mép màn hình
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight);
+
+            btnNo.style.left = x + 'px';
+            btnNo.style.top = y + 'px';
+        }
+
+        function love() {
+            alert("Về đi r kao mua cho 🙄🙄🙄");
+            window.location.href = "https://i.pinimg.com/originals/cf/ec/ef/cfecefaa00432c7af0ec5e1642c04ec3.jpg"; // Hoặc link ảnh/video kỷ niệm
+        }
+    </script>
+</body>
+</html>
