@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ê về Sài Gòn ăn socola này 🍫</title>
     <style>
-        /* Giao diện cơ bản */
         body {
             display: flex;
             flex-direction: column;
@@ -13,10 +12,10 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffe6e6; /* Màu hồng nhạt */
+            background-color: #ffe6e6;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
-            overflow: hidden; /* Chặn cuộn trang khi nút nhảy */
+            overflow: hidden;
         }
 
         h1 {
@@ -24,12 +23,7 @@
             font-size: 2.5rem;
             margin-bottom: 20px;
             padding: 0 20px;
-        }
-
-        .gif-container img {
-            width: 200px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            z-index: 10;
         }
 
         .buttons {
@@ -38,7 +32,7 @@
             align-items: center;
             gap: 20px;
             width: 100%;
-            height: 100px; /* Tạo không gian cho nút nhảy */
+            height: 100px;
             position: relative;
         }
 
@@ -50,79 +44,89 @@
             border: none;
             border-radius: 50px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        button:active {
-            transform: scale(0.9);
+            transition: all 0.2s ease;
         }
 
         #btnYes {
             background-color: #4dc1ff;
             color: white;
-            z-index: 1;
+            z-index: 100; /* Luôn nằm trên cùng */
         }
 
         #btnNo {
             background-color: #6c757d;
             color: white;
-            position: absolute; /* Để nhảy tự do */
-            transition: all 0.3s ease; /* Hiệu ứng lướt đi mượt mà */
-            touch-action: none; /* Quan trọng cho điện thoại */
+            position: absolute;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Nhảy giật cục cho nhoi */
+            touch-action: none;
+        }
+
+        /* Hiệu ứng rung nhẹ cho nút Không */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        }
+
+        .shaking {
+            animation: shake 0.5s infinite;
         }
     </style>
 </head>
 <body>
 
-    
-
     <h1>Ê về Sài Gòn ăn socola này 🍫</h1>
 
     <div class="buttons">
         <button id="btnYes">Oke 🦭🦭🦭</button>
-        <button id="btnNo">Không?</button>
+        <button id="btnNo" class="shaking">Không?</button>
     </div>
 
     <script>
         const btnNo = document.getElementById('btnNo');
         const btnYes = document.getElementById('btnYes');
+        let yesSize = 1.2;
+        const noTexts = ["Không?", "Mơ đi!", "Hụt rồi!", "Lêu lêu", "Ngon thì bấm đi", "Còn lâu nhé", "Đố bấm được"];
 
-        // Hàm di chuyển nút
         function moveButton() {
-            // Lấy kích thước màn hình
+            // 1. Nhảy vị trí
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
-
-            // Kích thước của nút
             const btnWidth = btnNo.offsetWidth;
             const btnHeight = btnNo.offsetHeight;
 
-            // Tính toán vị trí ngẫu nhiên (tránh sát mép quá)
             const newX = Math.random() * (windowWidth - btnWidth - 40) + 20;
             const newY = Math.random() * (windowHeight - btnHeight - 40) + 20;
 
+            btnNo.style.position = 'fixed';
             btnNo.style.left = newX + 'px';
             btnNo.style.top = newY + 'px';
-            btnNo.style.position = 'fixed'; // Chuyển sang fixed để nhảy khắp màn hình
+
+            // 2. Đổi text cho nhoi
+            const randomText = noTexts[Math.floor(Math.random() * noTexts.length)];
+            btnNo.innerText = randomText;
+
+            // 3. Làm nút Oke to dần mỗi lần nút Không nhảy
+            yesSize += 0.15;
+            btnYes.style.transform = `scale(${yesSize})`;
         }
 
-        // Xử lý khi di chuyển chuột (Máy tính)
+        // Cả máy tính và điện thoại
         btnNo.addEventListener('mouseover', moveButton);
-
-        // Xử lý khi chạm tay (Điện thoại)
-        btnNo.addEventListener('touchstart', function(e) {
-            e.preventDefault(); // Chặn click nhầm
+        btnNo.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             moveButton();
         });
 
-        // Khi nhấn Đồng ý
         btnYes.addEventListener('click', () => {
             alert("Về đi r kao mua cho 🙄🙄🙄");
-            // Bạn có thể chuyển hướng đến Facebook hoặc một trang kỷ niệm
-            // window.location.href = "https://i.pinimg.com/originals/cf/ec/ef/cfecefaa00432c7af0ec5e1642c04ec3.jpg";
+            // Hiệu ứng pháo hoa giấy đơn giản nếu thích
+            document.body.innerHTML = `<h1 style="color: #8d232f;">Về đi r kao mua cho 🙄🙄🙄</h1>
+                                       <img src="https://i.pinimg.com/originals/cf/ec/ef/cfecefaa00432c7af0ec5e1642c04ec3.jpg">`;
         });
     </script>
-
 </body>
 </html>
-
